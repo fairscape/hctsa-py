@@ -2,6 +2,15 @@ def BF_embed(y,tau = 1,m = 2,makeSignal = 0,randomSeed = [],beVocal = 0):
 
     N = len(y)
 
+    if tau == 'ac':
+
+        tau = CO_FirstZero(y,'ac')
+
+    if m == 'fnnsmall':
+
+        th = .01
+        
+
     N_embed = N - (m - 1)*tau
 
     if N_embed <= 0:
