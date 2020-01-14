@@ -26,7 +26,9 @@ def MF_hmm_CompareNStates(y,trainp = .6,nstater = [2,3,4]):
         % the number of states n_{states}$. We implement the code for p_{train} = 0.6$
         % as n_{states}$ varies across the range n_{states} = 2, 3, 4$.
         % Gaussian Observation Hidden Markov Model
+
     """
+
     N = len(y)
 
     Ntrain = math.floor(N * trainp)
@@ -44,6 +46,26 @@ def MF_hmm_CompareNStates(y,trainp = .6,nstater = [2,3,4]):
 
     for j in range(Nstate):
 
-        numStates = nstater[i]
+        numStates = nstater[j]
 
         Mu, Cov, P, Pi, LL = ZG_hmm(ytrain,Ntrain,numStates,30)
+
+        LLtrains[j] = LL[-1] / Ntrain
+
+        lik,likv = ZG_hmm_cl(ytest,Ntest,numStates,Mu,Cov,P,Pi)
+
+        LLtests[j] = lik / Ntest
+
+    outDict = {}
+
+    outDict['meanLLtrain'] = np.mean(LLtrains)
+    outDict['meanLLtest'] = np.mean(LLtests)
+    outDict['maxLtrain'] = np.max(LLtrains)
+    outDict['maxLLtest'] = np.max(LLtests)
+    outDict['meandiffLLtt'] = np.mean(np.absolute(LLtests - LLtrains))
+
+    for i in range(Nstate - 1):
+
+        outDict['LLtestdiff' + str(i)] = LLtests[i+1] - LLtests[i]
+
+    return outDict
