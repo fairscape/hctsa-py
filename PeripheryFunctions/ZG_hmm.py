@@ -1,4 +1,4 @@
-def ZG_hmm(X, T = '', K = 2, cyc = 1, tol = .0001):
+def ZG_hmm(X, T = '', K = 2, cyc = 100, tol = .0001):
     """
     Python Implementation currently slow used for loops same as orginal
     need to vectorize
@@ -73,6 +73,9 @@ def ZG_hmm(X, T = '', K = 2, cyc = 1, tol = .0001):
     P = np.random.uniform(0,1,(K,K))
     P = ZG_rdiv(P,ZG_rsum(P))
 
+    LL = []
+    lik = 0
+
     alpha = np.zeros((T,K))
     beta = np.zeros((T,K))
     gamma = np.zeros((T,K))
@@ -92,6 +95,8 @@ def ZG_hmm(X, T = '', K = 2, cyc = 1, tol = .0001):
             #Assuming P = 1 makes Cov single value not matrix
             iCov = 1 / Cov
 
+
+
             k2 = k1 / np.sqrt(Cov)
 
             #get rid of for loops
@@ -100,6 +105,7 @@ def ZG_hmm(X, T = '', K = 2, cyc = 1, tol = .0001):
                 for l in range(K):
 
                     d = Mu[l] - X[(n-1)*T + i]
+
                     B[i,l] = k2*np.exp(-.5*d*iCov*d)
 
             scale = np.zeros((T,1))
@@ -165,7 +171,30 @@ def ZG_hmm(X, T = '', K = 2, cyc = 1, tol = .0001):
 
         Cov = 0
 
+
+
         for l in range(K):
 
-            d = X-np.ones((int(T*N),1))*Mu[l]
+            d = X-Mu[l]
             Cov = Cov + np.matmul(ZG_rprod(d,Gamma[:,l]).T,d)
+
+        Cov = Cov / np.sum(Gammasum)
+
+        oldlik = lik
+        lik = np.sum(Scale)
+        LL.append(lik)
+
+
+        if cycle <= 1:
+
+            likbase = lik
+
+
+        elif lik < oldlik:
+
+            print("Error old lik better")
+
+        elif ((lik-likbase)<(1 + tol)*(oldlik-likbase)):
+            break
+
+    return Mu, Cov, P, Pi, LL
