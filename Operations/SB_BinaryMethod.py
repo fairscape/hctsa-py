@@ -65,8 +65,14 @@ def SB_BinaryStats(y,binaryMethod = 'diff'):
         outDict['meanstretch1'] = np.mean(stretch1)
         outDict['stdstretch1'] = np.std(stretch1)
 
-    outDict['meanstretchdiff'] = outDict['meanstretch1'] - outDict['meanstretch0']
-    outDict['stdstretchdiff'] = outDict['stdstretch1'] - outDict['stdstretch0']
+    try:
+
+        outDict['meanstretchdiff'] = outDict['meanstretch1'] - outDict['meanstretch0']
+        outDict['stdstretchdiff'] = outDict['stdstretch1'] - outDict['stdstretch0']
+
+    except:
+
+        pass
 
 
     return outDict
