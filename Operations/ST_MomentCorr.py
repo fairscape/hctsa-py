@@ -36,14 +36,14 @@ def ST_MomentCorr(x,windowLength = .02,wOverlap = .2,mom1 = 'mean',mom2 = 'std',
 
         return None
 
-    print(x_buff)
+
 
     M1 = SUB_calcmemoments(x_buff,mom1)
     M2 = SUB_calcmemoments(x_buff,mom2)
 
     R = np.corrcoef(M1,M2)
 
-    print(M2)
+    
 
     outDict = {}
 

@@ -3,7 +3,7 @@ import numpy as np
 import math
 
 
-def rm_histogram2( *args ):
+def RM_histogram2( *args ):
     """
     rm_histogram2() computes the two dimensional frequency histogram of two row vectors x and y
 

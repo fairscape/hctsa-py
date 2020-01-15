@@ -2,7 +2,7 @@ import numpy as np
 import math
 
 
-def rm_information(*args):
+def RM_information(*args):
     """
     rm_information estimates the mutual information of the two stationary signals with
     independent pairs of samples using various approaches:
@@ -84,12 +84,12 @@ def rm_information(*args):
     # setting up variables depending on amount of inputs
 
     if nargin == 2:
-        hist = rm_histogram2(x, y)  # call outside function from rm_histogram2.py
+        hist = RM_histogram2(x, y)  # call outside function from rm_histogram2.py
         h = hist[0]
         descriptor = hist[1]
 
     if nargin >= 3:
-        hist = rm_histogram2(x, y, args[2])  # call outside function from rm_histogram2.py, args[2] represents the given descriptor
+        hist = RM_histogram2(x, y, args[2])  # call outside function from rm_histogram2.py, args[2] represents the given descriptor
         h = hist[0]
         descriptor = hist[1]
 

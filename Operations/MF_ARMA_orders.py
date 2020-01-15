@@ -1,5 +1,7 @@
 def MF_ARMA_orders(y,pr = [1,2,3,4,5],qr=[0,1,2,3,4,5]):
 
+    y = (y - np.mean(y)) / np.std(y)
+
     aics = np.zeros((len(pr),len(qr)))
     bics = np.zeros((len(pr),len(qr)))
 
@@ -10,9 +12,14 @@ def MF_ARMA_orders(y,pr = [1,2,3,4,5],qr=[0,1,2,3,4,5]):
             p = pr[i]
             q = qr[i]
 
-            model = ARIMA(y, order=(p,0,q))
-            model_fit = model.fit( disp=False)
+            try:
 
+                model = ARIMA(y, order=(p,0,q))
+                model_fit = model.fit( disp=False)
+
+            except:
+                print("FAILED ARMA MODEL")
+                return None
             aics[i,j] = model_fit.aic
             bics[i,j] = model_fit.bic
 
