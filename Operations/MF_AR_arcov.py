@@ -1,8 +1,15 @@
 from statsmodels.tsa.arima_model import ARIMA
 def MF_AR_arcov(y,p = 2):
 
-    model = ARIMA(y, order=(p,0,0))
-    model_fit = model.fit( disp=False)
+
+    try:
+
+        model = ARIMA(y, order=(p,0,0))
+        model_fit = model.fit( disp=False)
+
+    except:
+        #Non-stationary returns expception
+        return
 
     ar_coefs = model_fit.arparams
     coef_errors = model_fit.bse
