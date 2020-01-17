@@ -25,4 +25,7 @@ def CO_AutoCorr(y,lag = 1,method = 'TimeDomianStat',t=1):
         acf = acf.real
         if lag == []:
             return acf
+        if lag > N:
+            print("Lag larger than series")
+            return
         return acf[lag]
