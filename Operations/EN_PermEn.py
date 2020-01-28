@@ -12,10 +12,13 @@ def EN_PermEn(y,m = 2,tau = 1):
 
         return np.nan
 
+
+
     Nx = x.shape[0]
 
     permList = perms(m)
     numPerms = len(permList)
+
 
     countPerms = np.zeros(numPerms)
 
@@ -25,7 +28,7 @@ def EN_PermEn(y,m = 2,tau = 1):
 
         for k in range(numPerms):
 
-            if not (permList[k,:] - ix).all() :
+            if (permList[k,:] - ix == [0,0,0]).all() :
 
                 countPerms[k] = countPerms[k] + 1
 
@@ -37,17 +40,11 @@ def EN_PermEn(y,m = 2,tau = 1):
 
     permEn = -sum(np.multiply(p_0,np.log2(p_0)))
 
-
-
     mFact = math.factorial(m)
 
     normPermEn = permEn / np.log2(mFact)
 
-
-
-    p_LE = p
-
-
+    p_LE = np.maximum(np.repeat(1 / Nx,p.shape),p)
 
     permENLE = - np.sum(np.multiply(p_LE,np.log(p_LE))) / (m - 1)
 
