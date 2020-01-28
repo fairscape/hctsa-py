@@ -28,7 +28,8 @@ def EN_PermEn(y,m = 2,tau = 1):
 
         for k in range(numPerms):
 
-            if (permList[k,:] - ix == [0,0,0]).all() :
+
+            if (permList[k,:] - ix == np.zeros(m)).all() :
 
                 countPerms[k] = countPerms[k] + 1
 
