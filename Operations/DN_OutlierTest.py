@@ -6,7 +6,7 @@ def DN_OutlierTest(y,p = 2,justMe=''):
 
     outDict['mean'] = np.mean(y[index])
 
-    outDict['std'] = np.std(y[index]) / np.std(y)
+    outDict['std'] = np.std(y[index],ddof = 1) / np.std(y,ddof = 1)
 
     if justMe == 'mean':
 

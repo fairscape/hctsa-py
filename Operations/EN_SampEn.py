@@ -5,28 +5,83 @@ import warnings
 #@numba.jit(nopython=True,parallel=True)
 def EN_SampEn(x,m=2,r=.2,scale=True):
     warnings.filterwarnings('ignore')
+
     if scale:
-        r = np.std(x) * r
+
+        r = np.std(x,ddof = 1) * r
+
+    print(r)
 
     templates = make_templates(x,m)
     #print(templates)
     A = 0
     B = 0
+
     for i in range(templates.shape[0]):
+
         template = templates[i,:]
+
         A = A + np.sum(np.amax(np.absolute(templates-template), axis=1) < r) -1
+
         B = B + np.sum(np.amax(np.absolute(templates[:,0:m]-template[0:m]),axis=1) < r) - 1
+
     if B == 0:
+
         return {'Sample Entropy':np.nan,"Quadratic Entropy":np.nan}
-    
+
+
     return {'Sample Entropy':- np.log(A/B),"Quadratic Entropy": - np.log(A/B) + np.log(2*r)}
+
 #@numba.jit(nopython=True,parallel=True)
 def make_templates(x,m):
+
     N = int(len(x) - (m))
+
     templates = np.zeros((N,m+1))
+
     for i in range(N):
+
         templates[i,:] = x[i:i+m+1]
+
     return templates
+
+
+
+
+# def SampEn(U, m = 2, r = .2):
+#
+#     r = r * np.log(U)
+#
+#     def _maxdist(x_i, x_j):
+#
+#         result = max([abs(ua - va) for ua, va in zip(x_i, x_j)])
+#
+#         return result
+#
+#
+#     def _phi(m):
+#
+#         x = [[U[j] for j in range(i, i + m - 1 + 1)] for i in range(N - m + 1)]
+#
+#         C = 0
+#
+#         for i in range(len(x)):
+#
+#             for j in range(len(x)):
+#
+#                 if i == j:
+#
+#                     continue
+#
+#                 C += (_maxdist(x[i], x[j]) <= r)
+#
+#         return C
+#
+#
+#     N = len(U)
+#
+#     return -np.log(_phi(m+1) / _phi(m))
+
 # def EN_SampEn(y,M = 2,r = 0,pre = ''):
 #     if r == 0:
 #         r = .1*np.std(y)
