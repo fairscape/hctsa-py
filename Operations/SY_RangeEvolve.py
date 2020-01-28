@@ -19,19 +19,33 @@ def SY_RangeEvolve(y):
     outDict['nuqp20'] = cumtox(cums,.2,N,outDict['totnuq'])
     outDict['nuqp50'] = cumtox(cums,.5,N,outDict['totnuq'])
 
-    Ns = [10,50,100]
+    Ns = [10,50,100,1000]
 
     for n in Ns:
 
-        if N < n:
+        if N <= n:
 
-            outDict['nuql' + str(n)] = None
-            outDict['l' + str(n)]= None
+            outDict['nuql' + str(n)] = np.nan
+
 
         else:
 
             outDict['nuql' + str(n)] = lunique(cums[:n]) / outDict['totnuq']
-            outDict['l' + str(n)] = cums[:n] / fullr
+
+
+    Ns = [10,50,100,1000]
+
+    for n in Ns:
+
+        if N >= n:
+
+            outDict['l' + str(n)] = cums[n - 1] / fullr
+
+
+        else:
+
+            outDict['l' + str(n)]= np.nan
+
 
 
     outDict['p1'] = cums[math.ceil(N*.01)-1] / fullr
