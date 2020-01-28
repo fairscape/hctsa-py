@@ -49,6 +49,7 @@ def FC_Suprise( y, whatPrior='dist', memory=0.2, numGroups=3, coarseGrainMethod=
     #------------------------------------------------------------------------------------------------------------------------------------------------------
 
     if (memory > 0) and (memory < 1): #specify memory as a proportion of the time series length
+
         memory = int(np.round(memory*len(y)))
 
     # ----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -62,8 +63,11 @@ def FC_Suprise( y, whatPrior='dist', memory=0.2, numGroups=3, coarseGrainMethod=
 
     #select random samples to test
     BF_ResetSeed(randomSeed) #in matlab randomSeed defaults to an empty array [] and is then converted to 'default', here it defaults to 'default'
+
     rs = np.random.permutation(int(N-memory)) + memory # can't do beginning of time series, up to memory
+
     rs = np.sort(rs[0:min(numIters,(len(rs)-1))])
+
     rs = np.array([rs]) # made into two dimensional array to match matlab and work with testing code directly below
 
 
