@@ -51,7 +51,7 @@ def SB_BinaryStats(y,binaryMethod = 'diff'):
 
         outDict['longstretch0'] = np.max(stretch0)
         outDict['meanstretch0'] = np.mean(stretch0)
-        outDict['stdstretch0'] = np.std(stretch0)
+        outDict['stdstretch0'] = np.std(stretch0,ddof = 1)
 
     if stretch1 == []:
 
@@ -63,7 +63,7 @@ def SB_BinaryStats(y,binaryMethod = 'diff'):
 
         outDict['longstretch1'] = np.max(stretch1)
         outDict['meanstretch1'] = np.mean(stretch1)
-        outDict['stdstretch1'] = np.std(stretch1)
+        outDict['stdstretch1'] = np.std(stretch1,ddof = 1)
 
     try:
 

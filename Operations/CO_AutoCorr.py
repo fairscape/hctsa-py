@@ -46,8 +46,8 @@ def CO_AutoCorr(y,lag = 1,method = 'Fourier',t=1):
             return acf
 
         if lag > N:
-
-            print("Lag larger than series")
+            pass
+            #print("Lag larger than series")
 
             return
 

@@ -1,20 +1,24 @@
 def DN_RemovePoints(y,removeHow = 'absfar',p = .1):
 
-    if removeHow == 'absclose':
+    if removeHow == 'absclose' or 'absclose' in removeHow:
 
         i =  np.argsort(-np.absolute(y),kind = 'mergesort')
 
-    elif removeHow == 'absfar':
+    elif removeHow == 'absfar' or 'absfar' in removeHow:
 
         i = np.argsort(np.absolute(y),kind = 'mergesort')
 
-    elif removeHow == 'min':
+    elif removeHow == 'min' or 'min' in removeHow:
 
         i =  np.argsort(-y,kind = 'mergesort')
 
-    elif removeHow == 'max':
+    elif removeHow == 'max' or 'max' in removeHow:
 
         i = np.argsort(y,kind = 'mergesort')
+
+    else:
+
+        return
 
     N = len(y)
 
@@ -49,13 +53,23 @@ def DN_RemovePoints(y,removeHow = 'absfar',p = .1):
 
     out['median'] = np.median(y_trim)
 
-    out['std'] = np.std(y_trim)
+    out['std'] = np.std(y_trim,ddof = 1)
 
     if stats.skew(y) != 0:
 
         out['skewnessrat'] = stats.skew(y_trim)/stats.skew(y)
 
-    out['kurtosisrat'] = stats.kurtosis(y_trim,fisher=False)/stats.kurtosis(y,fisher=False)
+    else:
+
+        out['skewnessrat'] = np.nan
+
+    try:
+
+        out['kurtosisrat'] = stats.kurtosis(y_trim,fisher=False)/stats.kurtosis(y,fisher=False)
+
+    except:
+
+        out['kurtosisrat'] = np.nan
 
     return out
 

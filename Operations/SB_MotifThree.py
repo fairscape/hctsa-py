@@ -18,7 +18,7 @@ def SB_MotifThree( y, cgHow = 'quantile'):
     N = len(yt)
 
 
-    r1 = [0,0,0]
+    r1 = [[],[],[]]
 
     out1 = np.zeros(3)
 
@@ -37,11 +37,15 @@ def SB_MotifThree( y, cgHow = 'quantile'):
 
     for i in range(3):
 
+        if len(r1[i]) == 0:
+
+            continue
+
         if r1[i][-1] == N - 1:
 
             r1[i] = r1[i][:-1]
 
-    r2 =[[0,0,0],[0,0,0],[0,0,0]]
+    r2 =[[[],[],[]],[[],[],[]],[[],[],[]]]
 
 
 
@@ -63,9 +67,16 @@ def SB_MotifThree( y, cgHow = 'quantile'):
 
         for j in range(3):
 
+            if len(r2[i][j]) == 0:
+
+                continue
+
             if r2[i][j][-1] == N - 2:
 
                 r2[i][j] = r2[i][j][:-1]
+
+
+
 
 
     r3 =[[[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0]],[[0,0,0],[0,0,0],[0,0,0]]]
@@ -127,6 +138,11 @@ def SB_MotifThree( y, cgHow = 'quantile'):
 
             for k in range(3):
 
+                if len(r3[i][j][k]) == 0:
+
+                    continue
+
+
                 if r3[i][j][k][-1] == N - 3:
 
                     r3[i][j][k] = r3[i][j][k][:-1]
@@ -153,7 +169,7 @@ def SB_MotifThree( y, cgHow = 'quantile'):
 
                     r4[iIndex][jIndex][kIndex][lIndex] = r3[iIndex][jIndex][kIndex][np.argwhere(yt[ r3[iIndex][jIndex][kIndex] + 3 ] == l)][:,0]
 
-                    out4[iIndex,jIndex,kIndex,lIndex] = len(r4[iIndex][jIndex][kIndex][lIndex]) / (N-2)
+                    out4[iIndex,jIndex,kIndex,lIndex] = len(r4[iIndex][jIndex][kIndex][lIndex]) / (N-3)
     for i in range(3):
 
         l1 = letters[i]
@@ -170,12 +186,13 @@ def SB_MotifThree( y, cgHow = 'quantile'):
 
                     l4 = letters[l]
 
-                outDict[l1 + l2 + l3 + l4] = out4[i,j,k,l]
+                    outDict[l1 + l2 + l3 + l4] = out4[i,j,k,l]
 
-    outDict['hhh4'] = f_entropy(out4)
+    outDict['hhhh'] = f_entropy(out4)
 
 
     return outDict
+
 
 def f_entropy(x):
 
