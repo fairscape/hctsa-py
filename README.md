@@ -1,5 +1,3 @@
 # hctsa-py
 
-Python Implementation of Ben Fultchers HCTSA
-
-https://github.com/benfulcher/hctsa
+A native python implementation of Ben Fulcher's Matlab-based [hctsa](https://github.com/benfulcher/hctsa) package.
