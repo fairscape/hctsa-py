@@ -30,6 +30,7 @@ def SB_BinaryStats(y,binaryMethod = 'diff'):
 
                 stretch0.append(count)
             count = 1
+
     if yBin[N-1] == 1:
 
         stretch1.append(count)

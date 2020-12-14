@@ -1,8 +1,8 @@
-
 def CO_AutoCorr(y,lag = 1,method = 'Fourier',t=1):
 
     # if not isinstance(y,np.ndarray):
     #     y = np.asarray(y)
+
 
     if method == 'TimeDomainStat':
 
@@ -22,6 +22,8 @@ def CO_AutoCorr(y,lag = 1,method = 'Fourier',t=1):
 
         N = len(y)
 
+
+
         nFFT = int(2**(np.ceil(np.log2(N)) + 1))
 
         F = np.fft.fft(y - y.mean(),nFFT)
@@ -35,6 +37,11 @@ def CO_AutoCorr(y,lag = 1,method = 'Fourier',t=1):
             if lag == []:
 
                 return acf
+            if lag > N:
+
+                #print("Lag larger than series")
+
+                return np.nan
 
             return acf[lag]
 
@@ -46,9 +53,15 @@ def CO_AutoCorr(y,lag = 1,method = 'Fourier',t=1):
             return acf
 
         if lag > N:
-            pass
+
             #print("Lag larger than series")
 
-            return
+            return np.nan
 
-        return acf[lag]
+        try:
+
+            return acf[lag]
+
+        except:
+
+            return acf[lag]
