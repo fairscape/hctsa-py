@@ -4,7 +4,7 @@ def CO_tc3(y,tau = 'ac'):
 
         tau = CO_FirstZero(y,'ac')
 
-    else:
+    elif tau == 'mi':
 
         tau = CO_FirstMin(y,'mi')
 
@@ -14,7 +14,14 @@ def CO_tc3(y,tau = 'ac'):
     yn1 = y[tau:N-tau]
     yn2 = y[tau*2:N]
 
-    raw = np.mean(np.multiply(np.multiply(yn,yn1),yn2)) / (np.absolute(np.mean(np.multiply(yn,yn1))) ** (3/2))
+    try:
+
+        raw = np.mean(np.multiply(np.multiply(yn,yn1),yn2)) / (np.absolute(np.mean(np.multiply(yn,yn1))) ** (3/2))
+
+    except:
+
+        return({'raw':np.nan,'abs':np.nan,'num':np.nan,
+                'absnum':np.nan,'denom':np.nan})
 
     outDict = {}
 

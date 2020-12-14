@@ -13,7 +13,13 @@ def CO_trev(y,tau = 'ac'):
     yn = y[0:N-tau]
     yn1 = y[tau:N]
 
-    raw = np.mean(np.power(yn1-yn,3)) / np.mean(np.power(yn1 - yn,2))**(3/2)
+    try:
+        raw = np.mean(np.power(yn1-yn,3)) / np.mean(np.power(yn1 - yn,2))**(3/2)
+
+    except:
+
+        return({'raw':np.nan,'abs':np.nan,'num':np.nan,
+                'absnum':np.nan,'denom':np.nan})
 
     outDict = {}
 
