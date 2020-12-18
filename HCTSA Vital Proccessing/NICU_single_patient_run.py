@@ -39,7 +39,7 @@ def read_in_NICU_file(path):
 # Data on Dataverse can be read in using below
 #Below is for NICU_****_vitals.mat
 def read_NICU_vitals(path):
-    f = scipy.io.loadmat('dataset.mat')
+    f = scipy.io.loadmat(path)
     df = pd.DataFrame(f['vdata'])
     names = []
     for i in range(len(f['vname'])):
