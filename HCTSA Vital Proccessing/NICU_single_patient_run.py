@@ -9,6 +9,7 @@ from Operations import *
 from Periphery import *
 import run_all_algos as run
 import sys
+import scipy.io
 
 #Reads in houlter data
 def read_in_data(id):
@@ -33,6 +34,17 @@ def read_in_NICU_file(path):
     times = pd.Series(arrays['vt'][0], index=df.index)
 
     return df,times
+
+# Data on Dataverse can be read in using below
+def read_NICU_vitals(path):
+    f = scipy.io.loadmat('dataset.mat')
+    df = pd.DataFrame(f['vdata'])
+    names = []
+    for i in range(len(f['vname'])):
+        names.append(f['vname'][i][0][0])
+    df.columns = names
+    times = pd.DataFrame(f['vt'])[0]
+    return df, times
 
 def get_column_names(vname,f):
     names = []
