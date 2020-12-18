@@ -21,6 +21,7 @@ def read_in_data(id):
 
 
 #Reads in new nicu data from Doug
+#this was for UVA_****_vitals.mat
 def read_in_NICU_file(path):
     arrays = {}
     f = h5py.File(path,'r')
@@ -36,6 +37,7 @@ def read_in_NICU_file(path):
     return df,times
 
 # Data on Dataverse can be read in using below
+#Below is for NICU_****_vitals.mat
 def read_NICU_vitals(path):
     f = scipy.io.loadmat('dataset.mat')
     df = pd.DataFrame(f['vdata'])
@@ -62,7 +64,7 @@ if len(sys.argv) > 2:
     diff = True
 else:
     diff = False
-df,time = read_in_NICU_file(filepath)
+df,time = read_in_NICU_vitals(filepath)
 time = time.to_numpy()
 num_cols = df.shape[1]
 time_series = {}
